@@ -1,0 +1,27 @@
+doctype html
+html(lang="en-US", ng-app="AddressBook")
+  head
+    meta(charset="utf-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    title Angular Address Book
+    link(rel="stylesheet" href="/lib/build.css")
+    link(rel="stylesheet" href="/css/main.css")
+  body(ng-controller="Main as main")
+    .container
+      .table-container
+        table
+          thead
+            tr
+              th name
+              th twitter
+              th number
+          tbody
+            tr(ng-repeat="person in main.people")
+              td {{person.name}}
+              td
+                a(href="http://twitter.com/{{person.twitter}}")
+                  {{person.twitter}}
+              td {{person.phone}}
+    script(src="lib/build.js")
+    script(src="js/main.js")
