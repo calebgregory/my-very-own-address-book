@@ -1,5 +1,5 @@
 doctype html
-html(lang="en-US", ng-app="AddressBook")
+html(lang="en-US", ng-app="addressBook")
   head
     meta(charset="utf-8")
     meta(http-equiv="X-UA-Compatible", content="IE=edge")
@@ -9,6 +9,15 @@ html(lang="en-US", ng-app="AddressBook")
     link(rel="stylesheet" href="/css/main.css")
   body(ng-controller="Main as main")
     .container
+      .form-container
+        form(name="newEntry" ng-submit="newEntry.$valid && main.addEntry()" novalidate)
+          label name
+          input(type="text" placeholder="Bill Dozer" ng-model="main.newEntry.name" required)
+          label twitter
+          input(type="text" placeholder="@noahsux" ng-model="main.newEntry.twitter" required)
+          label phone
+          input(type="tel" placeholder="4206660690" ng-model="main.newEntry.phone" required)
+          input(type="submit" value="+" ng-hide="newEntry.$invalid")
       .table-container
         table
           thead
@@ -22,6 +31,10 @@ html(lang="en-US", ng-app="AddressBook")
               td
                 a(href="http://twitter.com/{{person.twitter}}")
                   {{person.twitter}}
-              td {{person.phone}}
+              td
+                a(href="tel:{{person.phone}}")
+                  {{person.phone}}
+              td
+                button(ng-click="main.removeEntry(person)") x
     script(src="lib/build.js")
     script(src="js/main.js")
