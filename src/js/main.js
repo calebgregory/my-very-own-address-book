@@ -32,6 +32,7 @@ angular
     main.addEntry = function() {
       main.people.push(main.newEntry);
       main.newEntry = {};
+      $('#modal').modal('hide');
     };
 
     main.removeEntry = function(person) {

@@ -9,15 +9,7 @@ html(lang="en-US", ng-app="addressBook")
     link(rel="stylesheet" href="/css/main.css")
   body(ng-controller="Main as main")
     .container
-      .form-container
-        form(name="newEntry" ng-submit="newEntry.$valid && main.addEntry()" novalidate)
-          label name
-          input(type="text" placeholder="Bill Dozer" ng-model="main.newEntry.name" required)
-          label twitter
-          input(type="text" placeholder="@noahsux" ng-model="main.newEntry.twitter" required)
-          label phone
-          input(type="tel" placeholder="4206660690" ng-model="main.newEntry.phone" required)
-          input(type="submit" value="+" ng-hide="newEntry.$invalid")
+      h1 My Very Own Address Book
       .table-container
         table
           thead
@@ -36,5 +28,26 @@ html(lang="en-US", ng-app="addressBook")
                   {{person.phone}}
               td
                 button(ng-click="main.removeEntry(person)") x
+      button.btn.btn-primary.btn-lg(data-toggle="modal" data-target="#modal") Add a new address
+      .modal.fade#modal(tabindex="-1" role="dialog" aria-hidden="true")
+        .modal-dialog
+          .modal-content
+            .modal-header
+              h1 New Address
+              button.close(data-dismiss="modal" aria-label="close")
+            .modal-body
+              form(name="newEntry" novalidate)
+                .form-group(ng-class="{'has-success': newEntry.n.$dirty && newEntry.n.$valid, 'has-error': newEntry.n.$touched && newEntry.n.$invalid}")
+                  label.control-label name
+                  input.form-control(type="text" name="n" placeholder="Bill Dozer" ng-model="main.newEntry.name" required)
+                .form-group(ng-class="{'has-success': newEntry.t.$dirty && newEntry.t.$viewValue[0] === '@' && newEntry.t.$viewValue.length > 2, 'has-error': newEntry.t.$touched && newEntry.t.$viewValue.length < 3}")
+                  label.control-label twitter
+                  input.form-control(type="text" name="t" placeholder="@noahsux" ng-model="main.newEntry.twitter" required)
+                .form-group(ng-class="{'has-error': newEntry.p.$dirty && newEntry.p.$viewValue.length !== 10, 'has-success': newEntry.p.$dirty && newEntry.p.$viewValue.length === 10}")
+                  label.control-label phone
+                  input.form-control(type="tel" name="p" placeholder="4206660690" ng-model="main.newEntry.phone" required)
+            .modal-footer
+                  button.btn.btn-primary(ng-click="newEntry.$valid && main.addEntry()" ng-hide="newEntry.$invalid") +
+                  button.btn.btn-default(data-dismiss="modal") Close
     script(src="lib/build.js")
     script(src="js/main.js")
